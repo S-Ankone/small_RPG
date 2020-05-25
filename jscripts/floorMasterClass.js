@@ -6,41 +6,48 @@ let tileLayer = [[]];
 let dropContainer = [];
 
 
-function FloorMaster(){  // Creates the floor tiles, Manages object on the floor (drops / obstacles)
+class FloorMaster{
 
-	this.dropContainer = [];
-	
-	//MAKE tileLayer[[]] - the DOUBLE Array
-	tileLayer = new Array(floorW);
-	for(i=0; i < tileLayer.length; i++){
-		tileLayer[i] = new Array(floorH);
-	}
+	constructor(){  // Creates the floor tiles, Manages object on the floor (drops / obstacles)
 
-	// CREATE the TILES
-	for(i=0; i< floorW; i++){
-		for(j=0; j< floorH; j++){
-			 let aTile = new Tile(i, j);
-			 tileLayer[i][j] = aTile;
-		}	
-	}
+		this.dropContainer = [];
+		
+		//MAKE tileLayer[[]] - the DOUBLE Array
+		tileLayer = new Array(floorW);
+		for(let i=0; i < tileLayer.length; i++){
+			tileLayer[i] = new Array(floorH);
+		} // end
 
-	// ** UPDATE **
-	this.update = function(){
-		for(i=0; i< floorW; i++){
-			for(j=0; j< floorH; j++){
-				tileLayer[i][j].update();
+		// CREATE the TILES
+		for(let i=0; i< floorW; i++){
+			for(let j=0; j< floorH; j++){
+				let aTile = new Tile(i, j);
+				tileLayer[i][j] = aTile;
 			}	
-		}
-		for(d=0; d< dropContainer.length; d++){
-				dropContainer[d].update();
-		}
-	}	
+		} // end
+
+	} // End of Constr.
+	
+		// ** floorMaster UPDATE **
+		update (){
+			for(let i=0; i< floorW; i++){
+				for(let j=0; j< floorH; j++){
+					tileLayer[i][j].update();
+				}	
+			}
+			for(let d=0; d< dropContainer.length; d++){
+					dropContainer[d].update();
+			} 
+		} // end of UPDATE{}
+		
 } // END of FloorMaster{}
 
 
-/*	***************************
-		*** HELPER FUNCTIONS -  ***
-		*************************** */
+
+/*	************************
+	*** HELPER FUNCTIONS ***
+	************************ */
+
 function viewCoord(coord){ // gridCoordinate in actual 'viewWidth' coordinates
 	thisCoord = (coord * grid);
 	return thisCoord;
@@ -54,8 +61,8 @@ function gridCoord(coord){ // viewCoordinate in GRID coordinates
 // MOUSE COORDS !
 function getCoords(e){
 	
-	for(i=0; i< floorW; i++){
-		for(j=0; j< floorH; j++){
+	for(let i=0; i< floorW; i++){
+		for(let j=0; j< floorH; j++){
 			if(e.clientX >= viewCoord(tileLayer[i][j].x) && e.pageX < viewCoord(tileLayer[i][j].x) + grid){
 				theWorld.x = i+1;
 			}
@@ -64,10 +71,12 @@ function getCoords(e){
 			}
 		}
 	}
+		// DISPLAY cords on html
 	document.getElementById("mouse_coords").innerHTML = "Mouse Coordinates: (" + theWorld.x + "," + theWorld.y + ")";
 }
 
 function clearCoords(){
 	document.getElementById("mouse_coords").innerHTML = "";
 } 
+
 // END of HELPERS

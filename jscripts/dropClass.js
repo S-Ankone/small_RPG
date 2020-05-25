@@ -1,22 +1,28 @@
 console.log("ok, from dropData");
 
+let type;
+let amount;
 
 // CLASS = DROPS : Part of Monsters; Extends GameObject : incase of other resources? : 
-function Drop(type, amount, x, y){
-	this.type = type;
-	this.amount = amount;
-	this.x = x;
-	this.y = y;
+class Drop {
+
+	constructor(type, amount, x, y){
+		this.type = type;
+		this.amount = amount;
+		this.x = x;
+		this.y = y;
 	
 	console.log(amount + " " + type + " added @: (" + this.x +"," + this.y + ")");
 	
-	// DROP UPDATE *!*
-	this.update = function(){
-		this.drawDrop(type, viewCoord(this.x), viewCoord(this.y));
-		this.drawAmount(amount, viewCoord(this.x), viewCoord(this.y));
+	} // END of Constructor{}
+
+		// DROP UPDATE *!*
+	update(){
+		this.drawDrop(this.type, viewCoord(this.x), viewCoord(this.y));
+		this.drawAmount(this.amount, viewCoord(this.x), viewCoord(this.y));
 	} // END of Drop UPDATE
-	
-	this.drawDrop = function(type, x, y){
+		
+	drawDrop(type, x, y){
 		switch(type){
 			case "gold":
 					this.drawCoins(x, y);
@@ -25,9 +31,9 @@ function Drop(type, amount, x, y){
 				break;
 		}
 	} // END of drawDrop{}
-	
-	this.drawAmount = function(amount, x, y){  // Adds text to the drops, specifically the amount dropped.
-		amountTXT = theWorld.context;
+		
+	drawAmount(amount, x, y){  // Adds text to the drops, specifically the amount dropped.
+		let amountTXT = theWorld.context;
 		amountTXT.font = radius + "px arial";
 		amountTXT.textBaseline = "middle";
 		amountTXT.textAlign = "center";
@@ -35,8 +41,8 @@ function Drop(type, amount, x, y){
 		amountTXT.fillText(amount, x+radius/2, y+radius/2);
 	} // END of drawAmount{}	
 
-	this.drawCoins = function(x, y){
-		goldCoins = theWorld.context;
+	drawCoins(x, y){
+		let goldCoins = theWorld.context;
 		goldCoins.beginPath();
 		goldCoins.arc(x+radius/2, y+radius/2, radius, 0 , 2*Math.PI);
 		goldCoins.strokeStyle = "black";
@@ -44,8 +50,6 @@ function Drop(type, amount, x, y){
 		goldCoins.fillStyle = "yellow";
 		goldCoins.fill();
 	} // END of DrawCOINS{}
-	
+
+
 } // END of DROP{}
-
-
-
