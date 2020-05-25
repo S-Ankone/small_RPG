@@ -7,23 +7,46 @@ let updateFQ = 100;
 
 // WORLD INIT
 let theWorld;
+let theFloorMaster;
 let grid = 20
 let radius = grid/2
 
 
-/* 	***********************
+		/* 	***********************
 		** START OF THE GAME **
-		*********************** */
+	*********************** */
 window.onload = function(){
 	startGame();
 }
 
 function startGame(){
-	theWorld = new CreateWorld();
+	theWorld = new World();
 	thePlayer = new Player(playerX, playerY);
-	theMonster = new Monster();
+	theMonster = new Monster(monsterX, monsterY);
 	theWorld.start();	
 } // END startGame{}
+
+
+
+// Create the World 
+class World{
+
+	constructor(){
+		this.canvas = document.getElementById("game_view");
+	}
+
+	start(){
+		this.canvas.width = viewWidth;
+		this.canvas.height = viewHeight;
+		this.context = this.canvas.getContext("2d");
+		theFloorMaster = new FloorMaster();
+		addListeners();
+		this.interval = setInterval(updateWorld, updateFQ);
+	}
+		clear(){
+		this.context.clearRect(0,0, this.canvas.width, this.canvas.height);
+	}
+} // END CreateWorld{}
 
 
 // UPDATE FUNCTION
@@ -35,28 +58,10 @@ function updateWorld(){   // Is run every UPDATE at the interval specified at wo
 	theMonster.update();
 }	// END updateWorld{}
 
-
-// Create the World 
-function CreateWorld (){
-	this.canvas = document.getElementById("game_view");
-	this.start = function(){
-		this.canvas.width = viewWidth;
-		this.canvas.height = viewHeight;
-		this.context = this.canvas.getContext("2d");
-		theFloorMaster = new FloorMaster();
-		addListeners();
-		this.interval = setInterval(updateWorld, updateFQ);
-	}
-	this.clear = function(){
-		this.context.clearRect(0,0, this.canvas.width, this.canvas.height);
-	}
-} // END CreateWorld{}
-
-
 // ADD LISTENERS
 function addListeners(){  // function to add all the listeners to the new world
 	window.addEventListener('keydown', thePlayer.doPlayer);
-  window.addEventListener('keyup', thePlayer.stopPlayer);
+  	window.addEventListener('keyup', thePlayer.stopPlayer);
 			// these 2 below are to enable helper functions
 			theWorld.canvas.addEventListener('mousemove', getCoords);	
 			theWorld.canvas.addEventListener('mouseout', clearCoords);
@@ -69,7 +74,7 @@ function aFight(){
 		console.log("HIT");
 		theMonster.aLive = false;
 	}
-}
+} // END a Fight.
 
 
 
