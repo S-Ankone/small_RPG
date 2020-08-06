@@ -48,7 +48,7 @@ class Player extends Being{
 			let playerLoc = '';
 			
 			let html_player_coords = document.getElementById("player_coords");
-			playerLoc += '<div>' + "Player @ Location: (" +this.x + "," + this.y + ")" + '</div>';
+			playerLoc += '<div>' + "Player @ Location: (" + (this.x+1) + "," + (this.y+1) + ")" + '</div>';
 			html_player_coords.innerHTML = playerLoc;
 		} // End of playerLocation
 	

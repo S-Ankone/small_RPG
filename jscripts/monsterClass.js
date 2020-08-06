@@ -6,7 +6,7 @@ let monsterY = Math.floor(Math.random() * (floorH + 1)); // in grid positions
 let mHealth = 100;
 let mInventory = [];
 let drop_type = "gold";
-let drop_amount = 10;
+let drop_amount = 10; 
 
 
 // CLASS = MONSTERS : Extends Being 
